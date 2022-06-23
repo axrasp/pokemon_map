@@ -4,6 +4,7 @@ from django.db import models  # noqa F401
 class Pokemon(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(null=True)
+    description = models.TextField(null=True, verbose_name='Описание')
 
     def __str__(self):
         return f'Покемон {self.title}'
@@ -22,5 +23,5 @@ class PokemonEntity(models.Model):
     stamina = models.IntegerField(null=True, verbose_name='Stamina')
 
     def __str__(self):
-        return f'{self.pokemon} latitude {self.Lat},  longtitude {self.Lon}'
+        return f'{self.pokemon} latitude {self.lat},  longtitude {self.lon}'
     
