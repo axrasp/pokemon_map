@@ -3,11 +3,13 @@ from django.db import models  # noqa F401
 
 class Pokemon(models.Model):
     title = models.CharField(max_length=200)
+    title_en = models.CharField(max_length=200, null=True)
+    title_jp = models.CharField(max_length=200, null=True)
     image = models.ImageField(null=True)
     description = models.TextField(null=True, verbose_name='Описание')
 
     def __str__(self):
-        return f'Покемон {self.title}'
+        return self.title
 
 
 class PokemonEntity(models.Model):
@@ -23,5 +25,4 @@ class PokemonEntity(models.Model):
     stamina = models.IntegerField(null=True, verbose_name='Stamina')
 
     def __str__(self):
-        return f'{self.pokemon} latitude {self.lat},  longtitude {self.lon}'
-    
+        return f'{self.pokemon}'

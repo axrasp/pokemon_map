@@ -1,5 +1,3 @@
-import json
-
 import folium
 from django.db.models import Q
 from django.http import HttpResponseNotFound
@@ -36,8 +34,8 @@ def show_all_pokemons(request):
     pokemons_on_page = []
     for pokemon in pokemons:
         pokemon_entities = PokemonEntity.objects.filter(
-            Q(pokemon=pokemon, appears_at__lt=now)
-            & Q(pokemon=pokemon, disappears_at__gt=now)
+            Q(pokemon=pokemon, appears_at__lt=now),
+            Q(pokemon=pokemon, disappears_at__gt=now)
         )
         for pokemon_entity in pokemon_entities:
             add_pokemon(
@@ -74,10 +72,11 @@ def show_pokemon(request, pokemon_id):
             pokemon_entity.lon,
             f"media/{pokemon.image}"
         )
-        print(request.build_absolute_uri(f'/media/{pokemon.image}'))
     pokemon = {
         'img_url' : request.build_absolute_uri(f'/media/{pokemon.image}'),
         'title_ru': pokemon.title,
+        'title_en': pokemon.title_en,
+        'title_jp': pokemon.title_jp,
         'description': pokemon.description
     }
 
