@@ -37,25 +37,28 @@ class PokemonEntity(models.Model):
         null=True,
         verbose_name='Долгота')
     appears_at = models.DateTimeField(
-        null=True,
         verbose_name='Появляется с')
     disappears_at = models.DateTimeField(
-        null=True,
         verbose_name='Исчезает с')
     level = models.IntegerField(
         null=True,
+        blank=True,
         verbose_name='Уровень')
     health = models.IntegerField(
         null=True,
+        blank=True,
         verbose_name='Здоровье')
     attack = models.IntegerField(
         null=True,
+        blank=True,
         verbose_name='Аттака')
     defence = models.IntegerField(
         null=True,
+        blank=True,
         verbose_name='Защита')
     stamina = models.IntegerField(
         null=True,
+        blank=True,
         verbose_name='Выносливость')
 
     def __str__(self):
