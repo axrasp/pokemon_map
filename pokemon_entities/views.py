@@ -32,24 +32,24 @@ def show_all_pokemons(request):
     now = localtime()
     pokemons = Pokemon.objects.all()
     pokemons_on_page = []
-    for pokemon in pokemons:
-        pokemon_entities = PokemonEntity.objects.filter(
-            Q(pokemon=pokemon, appears_at__lt=now),
-            Q(pokemon=pokemon, disappears_at__gt=now)
+    pokemon_entities = PokemonEntity.objects.filter(
+        Q(appears_at__lt=now),
+        Q(disappears_at__gt=now)
+    )
+    for pokemon_entity in pokemon_entities:
+        image_uri = request.build_absolute_uri(pokemon_entity.pokemon.image.url)
+        add_pokemon(
+            folium_map, pokemon_entity.lat,
+            pokemon_entity.lon,
+            image_uri
         )
-        for pokemon_entity in pokemon_entities:
-            add_pokemon(
-                folium_map, pokemon_entity.lat,
-                pokemon_entity.lon,
-                f"media/{pokemon.image}"
-            )
     for pokemon in pokemons:
+        image_uri = request.build_absolute_uri(pokemon.image.url)
         pokemons_on_page.append({
             'pokemon_id': pokemon.id,
-            'img_url': f"media/{pokemon.image}",
+            'img_url': image_uri,
             'title_ru': pokemon.title,
         })
-
     return render(request, 'mainpage.html', context={
         'map': folium_map._repr_html_(),
         'pokemons': pokemons_on_page,
@@ -69,13 +69,14 @@ def show_pokemon(request, pokemon_id):
         pokemon=requested_pokemon
     )
     for pokemon_entity in reqested_pokemon_entities:
+        image_uri = request.build_absolute_uri(pokemon_entity.pokemon.image.url)
         add_pokemon(
             folium_map, pokemon_entity.lat,
             pokemon_entity.lon,
-            f"media/{pokemon.image}"
+            request.build_absolute_uri(pokemon_entity.pokemon.image.url)
         )
     pokemon = {
-        'img_url': request.build_absolute_uri(f'/media/{pokemon.image}'),
+        'img_url': image_uri,
         'title_ru': pokemon.title,
         'title_en': pokemon.title_en,
         'title_jp': pokemon.title_jp,
