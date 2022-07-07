@@ -33,7 +33,9 @@ class Pokemon(models.Model):
 
 class PokemonEntity(models.Model):
     """Экземляр покемона"""
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    pokemon = models.ForeignKey(Pokemon,
+                                on_delete=models.CASCADE,
+                                related_name='entity')
     lat = models.FloatField(
         blank=True,
         verbose_name='Широта')
