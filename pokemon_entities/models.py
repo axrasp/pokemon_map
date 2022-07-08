@@ -14,7 +14,7 @@ class Pokemon(models.Model):
         max_length=200,
         verbose_name='Названия (яп)',
         blank=True)
-    image = models.ImageField(null=True)
+    image = models.ImageField()
     description = models.TextField(
         blank=True,
         verbose_name='Описание')
