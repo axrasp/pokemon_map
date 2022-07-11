@@ -72,7 +72,7 @@ def show_pokemon(request, pokemon_id):
             pokemon_entity.lon,
             request.build_absolute_uri(pokemon_entity.pokemon.image.url)
         )
-    requested_pokemon = {
+    pokemon_on_page = {
         'img_url': image_uri,
         'title_ru': requested_pokemon.title,
         'title_en': requested_pokemon.title_en,
@@ -82,5 +82,5 @@ def show_pokemon(request, pokemon_id):
         'next_evolutions': requested_pokemon.next_evolutions.first(),
     }
     return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(), 'pokemon': requested_pokemon
+        'map': folium_map._repr_html_(), 'pokemon': pokemon_on_page
     })
